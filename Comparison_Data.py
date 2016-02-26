@@ -5,6 +5,7 @@ printing to output.
 created by Kathryn Kananen 1/29/2016
 
 Creates a dictionary and runs through them in output 
+Not used in data analysis 2/24/16
 """
 import sys
 
