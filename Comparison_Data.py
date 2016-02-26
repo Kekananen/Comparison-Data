@@ -3,6 +3,8 @@ This script is designed to compare differences between
 the Goebley and Hufnagel data by using a dictionary and 
 printing to output.
 created by Kathryn Kananen 1/29/2016
+
+Creates a dictionary and runs through them in output 
 """
 import sys
 
