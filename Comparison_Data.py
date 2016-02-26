@@ -6,7 +6,7 @@ created by Kathryn Kananen 1/29/2016
 """
 import sys
 
-# Activate: python Test2.py _______.txt ________.txt Random_name.txt
+# Activate: python Comparison_Data.py _______.txt ________.txt Random_name.txt
 Doebley2 = open(sys.argv[1]) 	#TPG050110.txt
 Doebley1 = open(sys.argv[2]) 	#TPG_PM.txt
 out = open(sys.argv[3], 'w') 
