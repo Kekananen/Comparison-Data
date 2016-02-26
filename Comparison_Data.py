@@ -11,7 +11,6 @@ import sys
 # Activate: python Comparison_Data.py _______.txt ________.txt Random_name.txt
 Doebley2 = open(sys.argv[1]) 	#TPG050110.txt
 Doebley1 = open(sys.argv[2]) 	#TPG_PM.txt
-out = open(sys.argv[3], 'w') 
 
 ## Remove whitespace 
 def RemoveSpaces(line):
@@ -44,4 +43,3 @@ for line in Doebley2:
 
 Doebley2.close()
 Doebley1.close()
-out.close()
