@@ -18,39 +18,74 @@ out = open(sys.argv[2], "w")
 
 
 ## makes column with name and genotype
+genoLST = []
 for line in HufDoe_data:
 	if not line.startswith("#"):
 		samples = line.split("\t")
 		samples_out = samples[0]
 		geno_out = samples[12]
 		data_out = (samples_out + "\t" + geno_out).replace("?", "N") #missing data replace
-		out.write(data_out)
-	
+		genoLST.append(data_out.strip())
+
+# geno out is last line so fix in for loop below so reference the list made above	
+
+geno_format1 = geno_out.split(",") # keeps alleles in pairs
 num_geno = len(geno_out.split(',')) #allele count
+
 allele_choices = "AGTC" #creates a random allele list
 
-## keeps alleles in pairs
-formated_geno = geno_out.split(",") #formating locus to be together
-for allele in formated_geno:
-	geno = allele.strip()
+# Creates random allele instance LST for all values in line 
+selected_alleles = []
+for i in range(num_geno):
+ 	random_allele = random.choice(allele_choices) # random allele instance
+	selected_alleles.append(random_allele)
 
-""""" 
-Issue: is printing 1 character not value as stated in geno previously, need to return 
-one value for every pair (C_C) not (C). 
-"""""
-	
-# scans every locus and puts in a List
-LocusLST = [] 
-selected_alleleLST = []
-for locus in data_out:
-	random_allele = random.choice(allele_choices)
-	if locus == random_allele:
-		selected_allele = random_allele
-		selected_alleleLST.append(selected_allele) #adds random to List
+#Creates list of counts of alleles using random alleles
+locus_countLST = [] # for if they are found with relative alleles
+allele_countLST = [] # allele counts for if they are present 
+for indiv in genoLST:
+	new_locus = indiv.split("\t")
+	geno = new_locus[1]
+	smallLST = []
+	small_countLST = []
+	cnt = 0 #counter 
+	for allele in geno.split(","):
+		first_allele = allele[0]
+		last_allele = allele[2]
+		missing_allele = "N"
+		if first_allele == selected_alleles[cnt]:
+			alleleC = 1
+		elif first_allele != selected_alleles[cnt]:
+			alleleC = 0
+		if last_allele == selected_alleles[cnt]:
+			alleleCL = 1
+		elif last_allele != selected_alleles[cnt]:
+			alleleCL = 0
+			
+		#runs for alleles if they are present
+		if first_allele != missing_allele:
+			count = 1
+		elif first_allele == missing_allele:
+			count = 0
+		if last_allele != missing_allele:
+			count2 = 1
+		elif last_allele == missing_allele:
+			count2 = 0
+		else:
+			print("Fix Me :'[")
+			
+		locus_count = alleleC + alleleCL
+		allele_count = count + count2
+		smallLST.append(locus_count)
+		small_countLST.append(allele_count)
 		
-"""""  
-Issue: same as above as after it scans for one character I need it to place the pair it 
-scanned into a list.  
-"""""
+		cnt += 1
+	locus_countLST.append(smallLST)
+	allele_countLST.append(small_countLST)
+
+All_dataLST = []
+All_dataLST2 = locus_countLST + allele_countLST
+print(All_dataLST2)
+		
 HufDoe_data.close()
 out.close()
