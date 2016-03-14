@@ -2,19 +2,15 @@
 This script was designed for converting data into a usable SpaceMix format excluding the
 R matrix needed to run it through R program.  Data should be made into a new file with all
 missing data and both sample size and a random count of T,A,C,G alleles accounted for
-Made by Kathryn Kananen 4/2/16
-Updated by Kathryn Kananen 4/7/16
-"""""
-"""""
-This script was designed for converting data into a usable SpaceMix format excluding the
-R matrix needed to run it through R program.  Data should be made into a new file with all
-missing data and both sample size and a random count of T,A,C,G alleles accounted for
-Made by Kathryn Kananen 4/2/16
+Made by Kathryn Kananen 3/2/16
+updated by Kathryn Kananen 3/7/16
+updated by Kathryn Kananen 3/13/16
 """""
 import sys, random
 
 HufDoe_data = open(sys.argv[1]) #CombinedDD.txt
 out = open(sys.argv[2], "w")
+count_out = open(sys.argv[3], "w")
 
 
 ## makes column with name and genotype
@@ -82,10 +78,9 @@ for indiv in genoLST:
 		cnt += 1
 	locus_countLST.append(smallLST)
 	allele_countLST.append(small_countLST)
-
-All_dataLST = []
-All_dataLST2 = locus_countLST + allele_countLST
-print(All_dataLST2)
+out.write(repr(allele_countLST))
+count_out.write(repr(locus_countLST))
 		
 HufDoe_data.close()
 out.close()
+count_out.close()
