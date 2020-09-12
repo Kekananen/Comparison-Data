@@ -1,0 +1,49 @@
+# This script was made in order to show three populations on a map of mexico 
+# given a set of established coordinates.
+
+# Load all packages first
+library(maps)
+library(mapdata)
+library(maptools) #for shapefiles
+library(scales)   #for transparency
+
+# Load shape file 
+crswgs84=CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+states=readShapePoly("/Users/User/Documents/mexstates/mexstates.shp",proj4string=crswgs84,verbose=TRUE)
+plot(states)
+
+# For non-confidence parv pops
+setwd("~/Documents/parvMap")
+
+# For parv pops
+allData = read.table("parvOut.txt") #import data
+df = data.frame(accession=allData$V2, lat=allData$V4, long=allData$V5)
+accession = df[,1]
+lat = df[,2]
+long = df[,3]
+
+points(allData$V7, allData$V6, pch=as.numeric(allData$V2), col="skyblue", cex=.1) #plot the sample sites
+points(df$long, df$lat, pch=1, col="skyblue", cex=.5)
+
+# For mex pops
+allData = read.table("mexOut.txt") #import data
+df = data.frame(accession=allData$V2, lat=allData$V4, long=allData$V5)
+accession = df[,1]
+lat = df[,2]
+long = df[,3]
+
+points(allData$V7, allData$V6, pch=as.numeric(allData$V2), col="skyblue", cex=.1) #plot the sample sites
+points(df$long, df$lat, pch=1, col="yellow", cex=.5)
+
+# For hybrid pops
+allData = read.table("hybOut.txt") #import data
+df = data.frame(accession=allData$V2, lat=allData$V4, long=allData$V5)
+accession = df[,1]
+lat = df[,2]
+long = df[,3]
+
+points(allData$V7, allData$V6, pch=as.numeric(allData$V2), col="skyblue", cex=.1) #plot the sample sites
+points(df$long, df$lat, pch=1, col="violetred1", cex=.5)
+
+# Set legend
+legend("topright", c("Parv", "Mex", "hybrids"), col = c("skyblue","yellow","violetred1"), pch = c(16,16,16))
